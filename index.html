@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Secret Universe ✨</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html,body{
+  margin:0;
+  width:100%;
+  min-height:100%;
+  font-family:Georgia,serif;
+  background:#030616;
+  color:white;
+  overflow-x:hidden;
+}
+
+button{
+  font-family:inherit;
+}
+
+#app{
+  min-height:100vh;
+  position:relative;
+  overflow:hidden;
+}
+
+/* =========================
+   GALAXY BACKGROUND
+========================= */
+
+.space{
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(circle at 50% 45%,#182957 0%,#0a1230 35%,#030616 75%);
+  overflow:hidden;
+  z-index:0;
+}
+
+.nebula{
+  position:absolute;
+  width:70vw;
+  height:70vw;
+  max-width:650px;
+  max-height:650px;
+  border-radius:50%;
+  background:
+    radial-gradient(circle,
+      rgba(117,95,255,.16),
+      rgba(65,113,255,.08) 35%,
+      transparent 70%);
+  filter:blur(25px);
+  left:50%;
+  top:45%;
+  transform:translate(-50%,-50%);
+  animation:pulse 7s ease-in-out infinite;
+}
+
+@keyframes pulse{
+  50%{
+    transform:translate(-50%,-50%) scale(1.12);
+    opacity:.7;
+  }
+}
+
+.star{
+  position:absolute;
+  width:2px;
+  height:2px;
+  background:white;
+  border-radius:50%;
+  animation:twinkle 2s ease-in-out infinite alternate;
+}
+
+@keyframes twinkle{
+  from{opacity:.2;transform:scale(.7)}
+  to{opacity:1;transform:scale(1.5)}
+}
+
+/* =========================
+   SCREENS
+========================= */
+
+.screen{
+  position:relative;
+  z-index:2;
+  min-height:100vh;
+  width:100%;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:25px 15px;
+}
+
+.screen.active{
+  display:flex;
+  animation:screenIn .7s ease;
+}
+
+@keyframes screenIn{
+  from{
+    opacity:0;
+    transform:scale(.96);
+  }
+  to{
+    opacity:1;
+    transform:scale(1);
+  }
+}
+
+/* =========================
+   WELCOME
+========================= */
+
+.welcome{
+  text-align:center;
+  max-width:500px;
+}
+
+.moon-big{
+  font-size:90px;
+  filter:drop-shadow(0 0 35px rgba(255,255,255,.5));
+  animation:floatMoon 4s ease-in-out infinite;
+}
+
+@keyframes floatMoon{
+  50%{transform:translateY(-12px)}
+}
+
+.welcome h1{
+  font-size:38px;
+  margin:15px 0 8px;
+}
+
+.welcome p{
+  color:#b8c2e8;
+  line-height:1.7;
+  font-size:16px;
+}
+
+.enter{
+  margin-top:25px;
+  border:1px solid rgba(255,255,255,.25);
+  background:linear-gradient(135deg,#7186ff,#a26cff);
+  color:white;
+  padding:14px 30px;
+  border-radius:999px;
+  font-size:16px;
+  cursor:pointer;
+  box-shadow:0 10px 35px rgba(100,90,255,.3);
+}
+
+/* =========================
+   UNIVERSE
+========================= */
+
+.universe{
+  width:min(600px,100%);
+  text-align:center;
+}
+
+.universe h1{
+  margin:0 0 5px;
+  font-size:31px;
+}
+
+.subtitle{
+  color:#9eaad3;
+  margin:0 0 25px;
+}
+
+.planets{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:17px;
+  max-width:430px;
+  margin:auto;
+}
+
+.planet{
+  min-height:155px;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:25px;
+  background:rgba(255,255,255,.06);
+  backdrop-filter:blur(10px);
+  color:white;
+  cursor:pointer;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  padding:15px;
+  transition:.3s;
+}
+
+.planet:hover{
+  transform:translateY(-7px) scale(1.02);
+  background:rgba(255,255,255,.11);
+}
+
+.planet-icon{
+  font-size:55px;
+  margin-bottom:8px;
+  filter:drop-shadow(0 0 15px rgba(255,255,255,.3));
+}
+
+.planet-name{
+  font-size:17px;
+}
+
+.planet-small{
+  color:#9da8cf;
+  font-size:11px;
+  margin-top:5px;
+}
+
+/* =========================
+   CONTENT CARD
+========================= */
+
+.content{
+  width:min(510px,100%);
+  background:rgba(7,12,38,.82);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:28px;
+  padding:25px 20px;
+  backdrop-filter:blur(15px);
+  box-shadow:0 20px 70px rgba(0,0,0,.35);
+  text-align:center;
+}
+
+.content-icon{
+  font-size:60px;
+}
+
+.content h2{
+  font-size:28px;
+  margin:10px 0;
+}
+
+.content p{
+  color:#c1c8e3;
+  line-height:1.7;
+}
+
+.back{
+  margin-top:20px;
+  border:1px solid rgba(255,255,255,.15);
+  background:rgba(255,255,255,.08);
+  color:white;
+  padding:10px 20px;
+  border-radius:999px;
+  cursor:pointer;
+}
+
+/* =========================
+   LETTERS
+========================= */
+
+.envelopes{
+  display:grid;
+  gap:10px;
+  margin-top:20px;
+}
+
+.envelope{
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.06);
+  color:white;
+  padding:15px;
+  border-radius:17px;
+  cursor:pointer;
+  text-align:left;
+}
+
+.envelope:hover{
+  background:rgba(255,255,255,.11);
+}
+
+.letter{
+  margin-top:15px;
+  padding:18px;
+  border-radius:18px;
+  background:rgba(255,255,255,.06);
+  color:#d8ddf0;
+  line-height:1.7;
+  display:none;
+}
+
+.letter.show{
+  display:block;
+  animation:fade .5s ease;
+}
+
+@keyframes fade{
+  from{opacity:0;transform:translateY(8px)}
+  to{opacity:1;transform:none}
+}
+
+/* =========================
+   MEMORIES
+========================= */
+
+.memory{
+  background:rgba(255,255,255,.06);
+  border-radius:20px;
+  padding:16px;
+  margin:12px 0;
+  text-align:left;
+}
+
+.memory-number{
+  color:#9eabff;
+  font-size:12px;
+}
+
+.memory h3{
+  margin:7px 0;
+}
+
+.memory p{
+  margin:0;
+  font-size:14px;
+}
+
+/* =========================
+   SONGS
+========================= */
+
+.song{
+  background:rgba(255,255,255,.06);
+  padding:15px;
+  margin:10px 0;
+  border-radius:17px;
+  text-align:left;
+}
+
+.song strong{
+  display:block;
+  margin-bottom:4px;
+}
+
+.song span{
+  color:#9ea8cc;
+  font-size:13px;
+}
+
+/* =========================
+   FLOWERS
+========================= */
+
+.flower-area{
+  min-height:220px;
+  position:relative;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  align-items:center;
+  gap:10px;
+  margin-top:15px;
+}
+
+.flower{
+  font-size:45px;
+  animation:flowerAppear .7s ease forwards;
+  opacity:0;
+}
+
+@keyframes flowerAppear{
+  from{
+    opacity:0;
+    transform:translateY(30px) scale(.3);
+  }
+  to{
+    opacity:1;
+    transform:none;
+  }
+}
+
+.love-list{
+  text-align:left;
+  margin-top:15px;
+}
+
+.love-list div{
+  padding:11px 0;
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+/* =========================
+   SECRET
+========================= */
+
+.lock{
+  font-size:75px;
+  animation:lockFloat 3s ease-in-out infinite;
+}
+
+@keyframes lockFloat{
+  50%{transform:translateY(-8px)}
+}
+
+.password-box{
+  display:flex;
+  gap:7px;
+  margin-top:18px;
+}
+
+.password-box input{
+  flex:1;
+  min-width:0;
+  padding:12px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,.15);
+  background:rgba(255,255,255,.08);
+  color:white;
+  outline:none;
+}
+
+.password-box button{
+  border:0;
+  border-radius:12px;
+  padding:12px 15px;
+  background:#7584ff;
+  color:white;
+  cursor:pointer;
+}
+
+#error{
+  color:#ff9b9b;
+  min-height:20px;
+  font-size:13px;
+}
+
+.secret-message{
+  display:none;
+  animation:fade .8s ease;
+}
+
+.secret-message.show{
+  display:block;
+}
+
+.secret-heart{
+  font-size:65px;
+  animation:heartbeat 1.2s infinite;
+}
+
+@keyframes heartbeat{
+  50%{transform:scale(1.15)}
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:400px){
+
+  .welcome h1{
+    font-size:32px;
+  }
+
+  .planets{
+    gap:10px;
+  }
+
+  .planet{
+    min-height:135px;
+  }
+
+  .planet-icon{
+    font-size:45px;
+  }
+
+}
+</style>
+</head>
+
+<body>
+
+<div id="app">
+
+<!-- GALAXY -->
+
+<div class="space">
+  <div class="nebula"></div>
+  <div id="stars"></div>
+</div>
+
+
+<!-- =========================
+     WELCOME SCREEN
+========================= -->
+
+<section id="welcome" class="screen active">
+
+<div class="welcome">
+
+<div class="moon-big">🌙</div>
+
+<h1>Secret Universe</h1>
+
+<p>
+Somewhere between the stars,<br>
+there's a little universe waiting for you. ✨
+</p>
+
+<p>
+Maybe there's something inside<br>
+you weren't expecting to find...
+</p>
+
+<button class="enter" onclick="openScreen('universe')">
+✨ Enter the Universe
+</button>
+
+</div>
+
+</section>
+
+
+<!-- =========================
+     UNIVERSE SCREEN
+========================= -->
+
+<section id="universe" class="screen">
+
+<div class="universe">
+
+<h1>🌌 Your Universe</h1>
+
+<p class="subtitle">
+Choose a planet to explore ✨
+</p>
+
+<div class="planets">
+
+<button class="planet" onclick="openScreen('feelings')">
+<div class="planet-icon">🌙</div>
+<div class="planet-name">Feelings</div>
+<div class="planet-small">Things left unsaid</div>
+</button>
+
+<button class="planet" onclick="openScreen('memories')">
+<div class="planet-icon">📸</div>
+<div class="planet-name">Memories</div>
+<div class="planet-small">Little moments</div>
+</button>
+
+<button class="planet" onclick="openScreen('letters')">
+<div class="planet-icon">💌</div>
+<div class="planet-name">Letters</div>
+<div class="planet-small">Open one</div>
+</button>
+
+<button class="planet" onclick="openScreen('songs')">
+<div class="planet-icon">🎵</div>
+<div class="planet-name">Songs</div>
+<div class="planet-small">Press play in your heart</div>
+</button>
+
+<button class="planet" onclick="openScreen('flowers')">
+<div class="planet-icon">🌷</div>
+<div class="planet-name">Things I Love</div>
+<div class="planet-small">A little garden</div>
+</button>
+
+<button class="planet" onclick="openScreen('secret')">
+<div class="planet-icon">🔐</div>
+<div class="planet-name">Secret</div>
+<div class="planet-small">Can you unlock it?</div>
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================
+     FEELINGS
+========================= -->
+
+<section id="feelings" class="screen">
+
+<div class="content">
+
+<div class="content-icon">🌙</div>
+
+<h2>Things I Can't Always Say</h2>
+
+<p>
+Sometimes words don't come out the way we want them to.
+</p>
+
+<p>
+You have a way of making ordinary moments feel special.
+And somehow, just knowing you're there can make a day feel
+a little brighter. ✨
+</p>
+
+<p>
+I hope you always remember that you matter,
+you are appreciated, and you deserve beautiful things.
+</p>
+
+<p>
+No matter how far away the stars seem,
+some people still manage to feel close. 🤍
+</p>
+
+<button class="back" onclick="openScreen('universe')">
+← Back to Universe
+</button>
+
+</div>
+
+</section>
+
+
+<!-- =========================
+     MEMORIES
+========================= -->
+
+<section id="memories" class="screen">
+
+<div class="content">
+
+<div class="content-icon">📸</div>
+
+<h2>Little Memories</h2>
+
+<p>
+Some moments are small, but somehow they stay with us.
+</p>
+
+<div class="memory">
+
+<div class="memory-number">MEMORY 01</div>
+
+<h3>🌸 A Random Moment</h3>
+
+<p>
+That completely ordinary moment that somehow became
+one of your favorite memories.
+</p>
+
+</div>
+
+<div class="memory">
+
+<div class="memory-number">MEMORY 02</div>
+
+<h3>✨ The Unexpected One</h3>
+
+<p>
+You weren't expecting anything special,
+and then suddenly you had a moment worth remembering.
+</p>
+
+</div>
+
+<div class="memory">
+
+<div class="memory-number">MEMORY 03</div>
+
+<h3>🌙 The Quiet One</h3>
+
+<p>
+Sometimes the quiet moments are the ones
+we remember the longest.
+</p>
+
+</div>
+
+<p class="muted">
+You can replace these with your own memories later. 💙
+</p>
+
+<button class="back" onclick="openScreen('universe')">
+← Back to Universe
+</button>
+
+</div>
+
+</section>
+
+
+<!-- =========================
+     LETTERS
+========================= -->
+
+<section id="letters" class="screen">
+
+<div class="content">
+
+<div class="content-icon">💌</div>
+
+<h2>Letters For You</h2>
+
+<p>
+Choose an envelope. Don't open them all at once. 👀
+</p>
+
+<div class="envelopes">
+
+<button class="envelope" onclick="openLetter(1)">
+💌 Letter #1 — Open when you need a smile
+</button>
+
+<button class="envelope" onclick="openLetter(2)">
+💌 Letter #2 — Open when you feel tired
+</button>
+
+<button class="envelope" onclick="openLetter(3)">
+💌 Letter #3 — Open when you need to remember something
+</button>
+
+</div>
+
+<div id="letter1" class="letter">
+Sometimes you don't need to fix everything.
+Sometimes you just need to breathe,
+take a little break, and remember that tomorrow
+is another chance. 🌷
+</div>
+
+<div id="letter2" class="letter">
+You've made it through every difficult day before this one.
+That's something worth being proud of.
+Rest if you need to. You don't have to be strong every second. 🤍
+</div>
+
+<div id="letter3" class="letter">
+You are allowed to grow slowly.
+You are allowed to change your mind.
+You are allowed to become a completely different version
+of yourself. ✨
+</div>
+
+<button class="back" onclick="openScreen('universe')">
+← Back to Universe
+</button>
+
+</div>
+
+</section>
+
+
+<!-- =========================
+     SONGS
+========================= -->
+
+<section id="songs" class="screen">
+
+<div class="content">
+
+<div class="content-icon">🎵</div>
+
+<h2>Songs That Belong Here</h2>
+
+<p>
+A tiny soundtrack for this universe.
+</p>
+
+<div class="song">
+<strong>🎧 Song One</strong>
+<span>Add your favorite song here</span>
+</div>
+
+<div class="song">
+<strong>🎧 Song Two</strong>
+<span>Add another song here</span>
+</div>
+
+<div class="song">
+<strong>🎧 Song Three</strong>
+<span>Add another song here</span>
+</div>
+
+<p>
+You can later replace these with actual song names
+and links.
+</p>
+
+<button class="back" onclick="openScreen('universe')">
+← Back to Universe
+</button>
+
+</div>
+
+</section>
+
+
+<!-- =========================
+     FLOWERS
+========================= -->
+
+<section id="flowers" class="screen">
+
+<div class="content">
+
+<div class="content-icon">🌷</div>
+
+<h2>My Little Garden</h2>
+
+<p>
+Every flower represents something beautiful.
+</p>
+
+<div class="flower-area" id="flowerArea"></div>
+
+<div class="love-list">
+
+<div>🌷 Your kindness</div>
+<div>🌷 Your smile</div>
+<div>🌷 Your laugh</div>
+<div>🌷 The way you care</div>
+<div>🌷 The little things you do</div>
+
+</div>
+
+<button onclick="growFlowers()">
+🌱 Grow the Garden
+</button>
+
+<br>
+
+<button class="back" onclick="openScreen('universe')">
+← Back to Universe
+</button>
+
+</div>
+
+</section>
+
+
+<!-- =========================
+     SECRET
+========================= -->
+
+<section id="secret" class="screen">
+
+<div class="content">
+
+<div id="locked">
+
+<div class="lock">🔐</div>
+
+<h2>Secret Planet</h2>
+
+<p>
+This planet is locked.
+<br>
+Only someone who knows the secret can enter. 👀
+</p>
+
+<div class="password-box">
+
+<input
+id="password"
+type="password"
+placeholder="Enter secret code"
+>
+
+<button onclick="unlockSecret()">
+Unlock
+</button>
+
+</div>
+
+<p id="error"></p>
+
+<p style="font-size:12px;color:#737fa8">
+Hint: You can choose your own password in the code.
+</p>
+
+</div>
+
+
+<div id="secretMessage" class="secret-message">
+
+<div class="secret-heart">💙</div>
+
+<h2>You Found It!</h2>
+
+<p>
+Okay... you actually found the secret. 😭
+</p>
+
+<p>
+There was never really a treasure here.
+The treasure was you finding your way this far. ✨
+</p>
+
+<p>
+<strong>
+Keep being you. The universe needs your kind of light.
+</strong>
+</p>
+
+<button onclick="openScreen('universe')">
+🌌 Return to Universe
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+</div>
+
+
+<script>
+
+/* =========================
+   CREATE STARS
+========================= */
+
+const stars=document.getElementById("stars");
+
+for(let i=0;i<130;i++){
+
+const star=document.createElement("span");
+
+star.className="star";
+
+star.style.left=Math.random()*100+"%";
+star.style.top=Math.random()*100+"%";
+
+const size=.8+Math.random()*2;
+
+star.style.width=size+"px";
+star.style.height=size+"px";
+
+star.style.animationDelay=
+(-Math.random()*3)+"s";
+
+star.style.animationDuration=
+(1.5+Math.random()*3)+"s";
+
+stars.appendChild(star);
+
+}
+
+
+/* =========================
+   SCREEN NAVIGATION
+========================= */
+
+function openScreen(id){
+
+document.querySelectorAll(".screen")
+.forEach(screen=>{
+screen.classList.remove("active");
+});
+
+const target=document.getElementById(id);
+
+if(target){
+target.classList.add("active");
+}
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+}
+
+
+/* =========================
+   LETTERS
+========================= */
+
+function openLetter(number){
+
+document.querySelectorAll(".letter")
+.forEach(letter=>{
+letter.classList.remove("show");
+});
+
+const letter=
+document.getElementById("letter"+number);
+
+if(letter){
+letter.classList.add("show");
+}
+
+}
+
+
+/* =========================
+   FLOWER GARDEN
+========================= */
+
+let flowerCount=0;
+
+function growFlowers(){
+
+const area=document.getElementById("flowerArea");
+
+const flowers=[
+"🌷",
+"🌸",
+"🌼",
+"🌺",
+"🌻",
+"💐"
+];
+
+for(let i=0;i<5;i++){
+
+if(flowerCount>=30)return;
+
+const flower=document.createElement("span");
+
+flower.className="flower";
+
+flower.textContent=
+flowers[Math.floor(Math.random()*flowers.length)];
+
+flower.style.animationDelay=
+(i*.12)+"s";
+
+area.appendChild(flower);
+
+flowerCount++;
+
+}
+
+}
+
+
+/* =========================
+   SECRET PASSWORD
+========================= */
+
+/*
+   CHANGE THIS PASSWORD
+   TO WHATEVER YOU WANT.
+*/
+
+const SECRET_PASSWORD="blueberry";
+
+
+function unlockSecret(){
+
+const input=
+document.getElementById("password");
+
+const error=
+document.getElementById("error");
+
+const value=input.value.trim().toLowerCase();
+
+if(value===SECRET_PASSWORD){
+
+document.getElementById("locked")
+.style.display="none";
+
+document.getElementById("secretMessage")
+.classList.add("show");
+
+error.textContent="";
+
+}else{
+
+error.textContent=
+"That's not the secret code... 👀";
+
+input.value="";
+
+}
+
+}
+
+
+/* Allow Enter key */
+
+document
+.getElementById("password")
+.addEventListener("keydown",function(event){
+
+if(event.key==="Enter"){
+unlockSecret();
+}
+
+});
+
+</script>
+
+</body>
+  </html>const SECRET_PASSWORD="blueberry";
